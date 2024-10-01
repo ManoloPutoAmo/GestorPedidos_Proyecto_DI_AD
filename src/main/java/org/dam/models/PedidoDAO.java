@@ -2,6 +2,7 @@ package org.dam.models;
 
 import java.sql.*;
 import java.sql.Date;
+
 import org.dam.database.SQLDatabaseManager;
 import org.postgresql.util.PSQLException;
 import java.util.*;
@@ -212,6 +213,77 @@ public class PedidoDAO {
             }
 
         } catch (PSQLException e) {
+            throw new SQLException("Error al obtener los productos");
+        } finally {
+            closeDBConnection();
+        }
+        return pedidos;
+    }
+
+    public ArrayList<PedidoModel> readPedidoByCliente(String cliente) throws SQLException {
+        if (!initDBConnection()) {
+            throw new SQLException("Error al conectar con la BBDD");
+        }
+        ArrayList<PedidoModel> pedidos = new ArrayList<>();
+
+        try {
+            String query = "SELECT p.*,c.nombre AS cliente_nombre,pr.nombre AS producto_nombre FROM pedidos p JOIN clientes c "
+                    +
+                    "ON p.cliente_id = c.cliente_id JOIN productos pr ON p.producto_id = pr.producto_id where Lower(c.nombre) = LOWER(?) order by p.pedido_id";
+
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, cliente);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                PedidoModel pedido = new PedidoModel();
+                pedido.setId(rs.getInt("pedido_id"));
+                pedido.setNombre_cliente(rs.getString("cliente_nombre"));
+                pedido.setNombre_producto(rs.getString("producto_nombre"));
+                pedido.setCantidad(rs.getInt("cantidad_producto"));
+                pedido.setDependiente(rs.getString("dependiente"));
+                pedido.setPrecio_total(rs.getDouble("precio_total"));
+                pedido.setFecha(rs.getDate("fecha_creado").toLocalDate());
+                pedidos.add(pedido);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SQLException("Error al obtener los productos");
+        } finally {
+            closeDBConnection();
+        }
+        return pedidos;
+    }
+
+    public ArrayList<PedidoModel> readProductoByNameAndAlcohol(String name, boolean alcohol) throws SQLException {
+        if (!initDBConnection()) {
+            throw new SQLException("Error al conectar con la BBDD");
+        }
+        ArrayList<PedidoModel> pedidos = new ArrayList<>();
+
+        try {
+            String query = "SELECT p.*,c.nombre AS cliente_nombre,pr.nombre AS producto_nombre FROM pedidos p JOIN clientes c "
+                    +
+                    "ON p.cliente_id = c.cliente_id JOIN productos pr ON p.producto_id = pr.producto_id WHERE LOWER(producto_nombre) LIKE (?) AND pr.alcohol = ? order by p.pedido_id";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, "%" + name.toLowerCase() + "%");
+            preparedStatement.setBoolean(2, alcohol);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                PedidoModel pedido = new PedidoModel();
+                pedido.setId(rs.getInt("pedido_id"));
+                pedido.setNombre_cliente(rs.getString("cliente_nombre"));
+                pedido.setNombre_producto(rs.getString("producto_nombre"));
+                pedido.setCantidad(rs.getInt("cantidad_producto"));
+                pedido.setDependiente(rs.getString("dependiente"));
+                pedido.setPrecio_total(rs.getDouble("precio_total"));
+                pedido.setFecha(rs.getDate("fecha_creado").toLocalDate());
+                pedidos.add(pedido);
+            }
+
+        } catch (PSQLException e) {
+            e.printStackTrace();
             throw new SQLException("Error al obtener los productos");
         } finally {
             closeDBConnection();

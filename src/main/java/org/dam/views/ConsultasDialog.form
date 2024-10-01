@@ -175,15 +175,6 @@
           <text value="Button"/>
         </properties>
       </component>
-      <component id="3ae1f" class="javax.swing.JTextField" binding="txt_producto">
-        <constraints>
-          <grid row="15" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-          <forms defaultalign-horz="false" defaultalign-vert="false"/>
-        </constraints>
-        <properties/>
-      </component>
       <component id="bdbca" class="javax.swing.JButton" binding="btn_next">
         <constraints>
           <grid row="20" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -252,6 +243,13 @@
           <font name="Moonrising" size="22" style="1"/>
           <text value="HASTA"/>
         </properties>
+      </component>
+      <component id="8a5d7" class="javax.swing.JComboBox" binding="cb_productos">
+        <constraints>
+          <grid row="15" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties/>
       </component>
     </children>
   </grid>

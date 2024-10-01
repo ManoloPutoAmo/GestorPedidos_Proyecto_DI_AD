@@ -28,16 +28,16 @@ import org.dam.views.ConsultasDialog;
 import org.dam.views.TomarDialog;
 import java.awt.event.KeyListener;
 
-
-public class ConsultasDialogController implements ActionListener, WindowListener, MouseListener, ItemListener, KeyListener {
+public class ConsultasDialogController
+        implements ActionListener, WindowListener, MouseListener, ItemListener, KeyListener {
 
     public static final String SEARCH_ID_PEDIDO = "SEARCH_ID_PEDIDO";
     public static final String SEARCH_CLIENTE = "SEARCH_CLIENTE";
     public static final String SEARCH_DEPENDIENTE = "SEARCH_DEPENDIENTE";
     public static final String SEARCH_DATE = "SEARCH_DATE";
     public static final String SEARCH_PRODUCTO_NAME_AL = "SEARCH_PRODUCTO_NAME_AL";
-    public static final String NEXT_PAGE= "NEXT_PAGE";
-    public static final String BACK_PAGE= "BACK_PAGE";
+    public static final String NEXT_PAGE = "NEXT_PAGE";
+    public static final String BACK_PAGE = "BACK_PAGE";
 
     private ConsultasDialog consultasDialog;
     private WindowsServices windowsServices;
@@ -47,7 +47,8 @@ public class ConsultasDialogController implements ActionListener, WindowListener
 
     private int offset = 0;
 
-    public ConsultasDialogController(WindowsServices windowsServices, ClientsDAO clientsDAO, ProductsDAO productosDAO, PedidoDAO pedidoDAO) {
+    public ConsultasDialogController(WindowsServices windowsServices, ClientsDAO clientsDAO, ProductsDAO productosDAO,
+            PedidoDAO pedidoDAO) {
         this.windowsServices = windowsServices;
         this.clientsDAO = clientsDAO;
         this.pedidoDAO = pedidoDAO;
@@ -61,7 +62,7 @@ public class ConsultasDialogController implements ActionListener, WindowListener
             clientes = clientsDAO.readClientes();
             consultasDialog.showClients(clientes);
         } catch (SQLException e) {
-            consultasDialog.setAlert("Error al consultar los datos de los clientes",true);
+            consultasDialog.setAlert("Error al consultar los datos de los clientes", true);
             e.printStackTrace();
         }
 
@@ -73,7 +74,7 @@ public class ConsultasDialogController implements ActionListener, WindowListener
             productos = productosDAO.readProductos();
             consultasDialog.showProductos(productos);
         } catch (SQLException e) {
-            consultasDialog.setAlert("Error al consultar los datos de los pedidos",true);
+            consultasDialog.setAlert("Error al consultar los datos de los pedidos", true);
             e.printStackTrace();
         }
     }
@@ -84,7 +85,7 @@ public class ConsultasDialogController implements ActionListener, WindowListener
             pedidos = pedidoDAO.readPedidos(offset, limit);
             consultasDialog.showPedidos(pedidos);
         } catch (SQLException e) {
-            consultasDialog.setAlert("Error al consultar los datos de los pedidos",true);
+            consultasDialog.setAlert("Error al consultar los datos de los pedidos", true);
             e.printStackTrace();
         }
 
@@ -104,7 +105,7 @@ public class ConsultasDialogController implements ActionListener, WindowListener
             pedidos = pedidoDAO.readPedidoById(id);
             consultasDialog.showPedidos(pedidos);
         } catch (SQLException e) {
-            consultasDialog.setAlert("Error al consultar los datos de los pedidos",true);
+            consultasDialog.setAlert("Error al consultar los datos de los pedidos", true);
             e.printStackTrace();
         }
 
@@ -113,17 +114,36 @@ public class ConsultasDialogController implements ActionListener, WindowListener
     public void handleSearchProductoByNameAndAlcohol() {
         String name = consultasDialog.getProductoName();
         boolean alcohol = consultasDialog.isAlcohol();
-        ArrayList<ProductsModel> productos;
+        ArrayList<PedidoModel> pedidos;
         try {
-            productos = productosDAO.readProductoByNameAndAlcohol(name, alcohol);
-            consultasDialog.showProductos(productos);
+            pedidos = pedidoDAO.readProductoByNameAndAlcohol(name, alcohol);
+            consultasDialog.showPedidos(pedidos);
         } catch (SQLException e) {
-            consultasDialog.setAlert("Error al consultar los datos de los pedidos",true);
+            consultasDialog.setAlert("Error al consultar los datos de los pedidos", true);
             e.printStackTrace();
-        }        
+        }
     }
 
-    public void handleSearchPedidosByDates(){
+    public void handleSearchPedidosByCliente() {
+        String cliente = consultasDialog.getTxtCliente();
+        ArrayList<PedidoModel> pedidos;
+        try {
+            pedidos = pedidoDAO.readPedidoByCliente(cliente);
+            
+            consultasDialog.showPedidos(pedidos);
+            if (pedidos.isEmpty()) {
+                consultasDialog.setAlert("No se encontraron pedidos del cliente " + cliente, true);
+            }else{
+                consultasDialog.setAlert("Se encontraron " + pedidos.size() + " pedidos del cliente " + cliente, false);
+            }
+
+        } catch (SQLException e) {
+            consultasDialog.setAlert("Error al consultar los datos de los pedidos", true);
+            e.printStackTrace();
+        }
+    }
+
+    public void handleSearchPedidosByDates() {
         Date from = consultasDialog.getFromDate();
         Date to = consultasDialog.getToDate();
         ArrayList<PedidoModel> pedidos;
@@ -132,7 +152,7 @@ public class ConsultasDialogController implements ActionListener, WindowListener
             pedidos = pedidoDAO.readPedidoByDates(from, to);
             consultasDialog.showPedidos(pedidos);
         } catch (SQLException e) {
-            consultasDialog.setAlert("Error al consultar los datos de los pedidos",true);
+            consultasDialog.setAlert("Error al consultar los datos de los pedidos", true);
             e.printStackTrace();
         }
     }
@@ -154,6 +174,9 @@ public class ConsultasDialogController implements ActionListener, WindowListener
             case SEARCH_PRODUCTO_NAME_AL:
                 handleSearchProductoByNameAndAlcohol();
                 break;
+            case SEARCH_CLIENTE:
+                handleSearchPedidosByCliente();
+                break;
             case SEARCH_DATE:
                 handleSearchPedidosByDates();
                 break;
@@ -170,11 +193,11 @@ public class ConsultasDialogController implements ActionListener, WindowListener
     }
 
     private void handleNextPage() {
-        if (consultasDialog.getActual_page()+1 > consultasDialog.getTotal_pages()) {
+        if (consultasDialog.getActual_page() + 1 > consultasDialog.getTotal_pages()) {
             return;
         }
         offset += consultasDialog.getCbItems();
-        consultasDialog.setActual_page(consultasDialog.getActual_page()+1);
+        consultasDialog.setActual_page(consultasDialog.getActual_page() + 1);
         consultasDialog.setLabelPages();
         handleSearchPedidos(offset, consultasDialog.getCbItems());
     }
@@ -184,12 +207,20 @@ public class ConsultasDialogController implements ActionListener, WindowListener
             return;
         }
         offset -= consultasDialog.getCbItems();
-        consultasDialog.setActual_page(consultasDialog.getActual_page()-1);
+        consultasDialog.setActual_page(consultasDialog.getActual_page() - 1);
         consultasDialog.setLabelPages();
 
         handleSearchPedidos(offset, consultasDialog.getCbItems());
     }
-   
+
+    private void handleLoadCbProductos() {
+        try {
+            consultasDialog.loadComboProducts(productosDAO.readProductos());
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 
     private void handleLoadCbItemsPages() {
         consultasDialog.loadCbItemsPages();
@@ -221,7 +252,9 @@ public class ConsultasDialogController implements ActionListener, WindowListener
 
     @Override
     public void windowActivated(WindowEvent e) {
+        consultasDialog.cleanData();
         handleLoadCbItemsPages();
+        handleLoadCbProductos();
         handleSearchPedidos(0, 10);
         setTotalElements();
         consultasDialog.setActual_page(1);
@@ -233,11 +266,9 @@ public class ConsultasDialogController implements ActionListener, WindowListener
         // TODO Auto-generated method stub
     }
 
-
-
     @Override
     public void mouseClicked(MouseEvent e) {
-        
+
     }
 
     @Override
@@ -246,11 +277,11 @@ public class ConsultasDialogController implements ActionListener, WindowListener
             try {
                 PedidoModel pedido = pedidoDAO.readPedidoById(consultasDialog.getPedidoID()).get(0);
                 TomarDialog tomarDialog = (TomarDialog) this.windowsServices.getWindow("TomarDialog");
-                //consultasDialog.closeWindow();
+                // consultasDialog.closeWindow();
                 tomarDialog.setPedidoModel(pedido);
                 tomarDialog.setMode(EDIT_MODE);
                 tomarDialog.showWindow();
-                
+
             } catch (Exception d) {
                 d.printStackTrace();
             }
@@ -274,21 +305,21 @@ public class ConsultasDialogController implements ActionListener, WindowListener
 
     @Override
     public void keyTyped(KeyEvent e) {
-        
+
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        
+
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         // TODO Auto-generated method stub
         System.out.println("Key pressed: " + e.getKeyCode());
-        System.out.println(consultasDialog.getTxtPedido());
-        if (e.getKeyCode() !=-1) {
-            handleSearchPedidoById();
+        System.out.println(consultasDialog.getTxtCliente());
+        if (e.getKeyCode() != -1) {
+            handleSearchPedidosByCliente();
         }
     }
 

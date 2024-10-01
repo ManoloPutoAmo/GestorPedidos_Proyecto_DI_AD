@@ -45,6 +45,7 @@ public class ConsultasDialog extends JDialog implements InterfaceView {
     private JButton btn_back;
     private JComboBox cb_items;
     private JLabel lbl_pages;
+    private JComboBox cb_productos;
 
     private int totalElements;
     private int actual_page;
@@ -72,9 +73,20 @@ public class ConsultasDialog extends JDialog implements InterfaceView {
         setCommands();
     }
 
+    public void cleanData() {
+        txt_cliente.setText("");
+        txt_pedido.setText("");
+        cb_productos.setModel(new DefaultComboBoxModel());
+        chb_alcohol.setSelected(false);
+        dp_from.setDate(null);
+        dp_to.setDate(null);
+        lb_alert.setVisible(false);
+    }
+
     //! HACER ESTO
-    public void loadComboProducts(){
-        ArrayList<ProductsModel> productos;
+    public void loadComboProducts(ArrayList<ProductsModel> productos){
+        DefaultComboBoxModel model = new DefaultComboBoxModel(productos.toArray());
+        cb_productos.setModel(model);
     }
 
     public void showClients(ArrayList<ClientsModel> clientes) {
@@ -94,7 +106,7 @@ public class ConsultasDialog extends JDialog implements InterfaceView {
 
     public void showPedidos(ArrayList<PedidoModel> pedidos) {
         try {
-            String[] indexProductos = new String[] { "ID", "ClienteID", "ProductoID", "Cantidad", "Dependiente", "Precio", "Fecha" };
+            String[] indexProductos = new String[] { "ID", "Nombre Cliente", "Nombre Produco", "Cantidad", "Dependiente", "Precio", "Fecha" }; 
             DefaultTableModel model = new DefaultTableModel(indexProductos, 0);
             for (PedidoModel pedido : pedidos) {
                 model.addRow(pedido.toArray());
@@ -143,7 +155,7 @@ public class ConsultasDialog extends JDialog implements InterfaceView {
     }
 
     public String getProductoName() {
-        return txt_producto.getText();
+        return cb_productos.getSelectedItem().toString();
     }
 
     public boolean isAlcohol() {
@@ -170,6 +182,13 @@ public class ConsultasDialog extends JDialog implements InterfaceView {
 
     public void setTotal_pages(int total_pages) {
         this.total_pages = total_pages;
+    }
+
+    public String getTxtCliente() {
+        return txt_cliente.getText();
+    }
+    public void setTxtCliente(String txt_cliente) {
+        this.txt_cliente.setText(txt_cliente);
     }
 
     public void setLabelPages(){
@@ -209,6 +228,7 @@ public class ConsultasDialog extends JDialog implements InterfaceView {
     @Override
     public void setCommands() {
         btn_pedido.setActionCommand(SEARCH_ID_PEDIDO);
+        btn_cliente.setActionCommand(SEARCH_CLIENTE);
         btn_producto.setActionCommand(SEARCH_PRODUCTO_NAME_AL);
         btn_date.setActionCommand(SEARCH_DATE);
         btn_next.setActionCommand(NEXT_PAGE);
@@ -221,8 +241,9 @@ public class ConsultasDialog extends JDialog implements InterfaceView {
         btn_pedido.addActionListener(listener);
         btn_producto.addActionListener(listener);
         btn_date.addActionListener(listener);
+        btn_cliente.addActionListener(listener);
         tbl_queries.addMouseListener((MouseListener) listener);
-        txt_pedido.addKeyListener((KeyListener) listener);
+        txt_cliente.addKeyListener((KeyListener) listener);
         cb_items.addItemListener((ItemListener) listener);
         btn_next.addActionListener(listener);
         btn_back.addActionListener(listener);
