@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.dam.views.TomarDialog">
+  <grid id="27dc6" binding="tomarPanel" layout-manager="FormLayout">
+    <rowspec value="center:d:grow"/>
+    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:d:grow"/>
+    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:d:grow"/>
+    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:d:grow"/>
+    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:d:grow"/>
+    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:d:grow"/>
+    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:d:grow"/>
+    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:d:grow"/>
+    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:d:grow"/>
+    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:d:grow"/>
+    <colspec value="fill:max(d;4px):noGrow"/>
+    <colspec value="left:16dlu:noGrow"/>
+    <colspec value="fill:max(d;4px):noGrow"/>
+    <colspec value="left:130dlu:noGrow"/>
+    <colspec value="fill:265px:grow"/>
+    <colspec value="left:19dlu:noGrow"/>
+    <colspec value="fill:15px:noGrow"/>
+    <constraints>
+      <xy x="20" y="20" width="600" height="600"/>
+    </constraints>
+    <properties>
+      <inheritsPopupMenu value="true"/>
+      <maximumSize width="600" height="600"/>
+      <minimumSize width="600" height="600"/>
+      <preferredSize width="600" height="600"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="af4cc" class="javax.swing.JLabel" binding="lb_alerta">
+        <constraints>
+          <grid row="2" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <font name="Moonrising" size="16" style="1"/>
+          <foreground color="-1748332"/>
+          <text value="Rellena todos los campos"/>
+          <visible value="true"/>
+        </properties>
+      </component>
+      <component id="c4792" class="javax.swing.JLabel" binding="lb_tomar">
+        <constraints>
+          <grid row="0" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <font name="Moonrising" size="48" style="1"/>
+          <text value="TOMAR COMANDA"/>
+        </properties>
+      </component>
+      <component id="ef1ce" class="javax.swing.JLabel" binding="lb_fecha">
+        <constraints>
+          <grid row="6" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <font name="Moonrising" size="17" style="1"/>
+          <text value="Fecha Creación"/>
+        </properties>
+      </component>
+      <component id="78c00" class="javax.swing.JLabel" binding="lb_cliente">
+        <constraints>
+          <grid row="8" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <font name="Moonrising" size="17" style="1"/>
+          <text value="Cliente"/>
+        </properties>
+      </component>
+      <component id="9a02" class="javax.swing.JLabel" binding="lb_producto">
+        <constraints>
+          <grid row="10" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <font name="Moonrising" size="17" style="1"/>
+          <text value="Producto"/>
+        </properties>
+      </component>
+      <component id="16cdc" class="javax.swing.JLabel" binding="lb_cantidad">
+        <constraints>
+          <grid row="12" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <font name="Moonrising" size="17" style="1"/>
+          <text value="Cantidad"/>
+        </properties>
+      </component>
+      <component id="32d66" class="javax.swing.JLabel" binding="lb_total">
+        <constraints>
+          <grid row="14" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <font name="Moonrising" size="17" style="1"/>
+          <text value="Total"/>
+        </properties>
+      </component>
+      <component id="ff3a7" class="javax.swing.JLabel" binding="lb_atendido">
+        <constraints>
+          <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <font name="Moonrising" size="17" style="1"/>
+          <text value="ATENDIDO POR:"/>
+        </properties>
+      </component>
+      <component id="8aad3" class="com.github.lgooddatepicker.components.DatePicker" binding="dp_fecha">
+        <constraints>
+          <grid row="6" column="4" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="63fba" class="javax.swing.JTextField" binding="tx_atendido">
+        <constraints>
+          <grid row="4" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="31489" class="javax.swing.JComboBox" binding="cb_cliente">
+        <constraints>
+          <grid row="8" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="54e8f" class="javax.swing.JComboBox" binding="cb_producto">
+        <constraints>
+          <grid row="10" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="2451" class="javax.swing.JLabel" binding="lb_total_pagar">
+        <constraints>
+          <grid row="14" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <font name="Moonrising" size="28" style="1"/>
+          <text value="0.00€"/>
+        </properties>
+      </component>
+      <component id="6421e" class="javax.swing.JButton" binding="btn_rehacer">
+        <constraints>
+          <grid row="16" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+          <forms top="0" left="0" bottom="0" right="50" defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <font name="Moonrising" size="14" style="0"/>
+          <text value="Rehacer"/>
+        </properties>
+      </component>
+      <component id="7e00c" class="javax.swing.JButton" binding="btn_finalizar">
+        <constraints>
+          <grid row="16" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <forms top="0" left="50" bottom="0" right="0" defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <font name="Moonrising" size="14" style="0"/>
+          <text value="ENVIAR"/>
+        </properties>
+      </component>
+      <component id="1d475" class="javax.swing.JSlider" binding="sd_cantidad">
+        <constraints>
+          <grid row="12" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties>
+          <valueIsAdjusting value="false"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
